@@ -1,0 +1,84 @@
+defaultTasks = ['clean', 'test']
+
+ext {
+    jobDslVersion = '1.63'
+    jenkinsVersion = '2.46'
+   
+}
+
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+repositories {
+    jcenter()
+    maven { url 'http://repo.jenkins-ci.org/releases/' }
+}
+
+configurations {
+    testPlugins {}
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.5'
+
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile 'junit:junit:4.12'
+
+    // Jenkins test harness
+    testCompile 'org.jenkins-ci.main:jenkins-test-harness:2.8'
+    testCompile "org.jenkins-ci.main:jenkins-war:${jenkinsVersion}"
+    testCompile "org.jenkins-ci.main:jenkins-war:${jenkinsVersion}:war-for-test@jar"
+
+    // Job DSL plugin including plugin dependencies
+    testCompile "org.jenkins-ci.plugins:job-dsl:${jobDslVersion}"
+    testCompile "org.jenkins-ci.plugins:job-dsl:${jobDslVersion}@jar"
+    testCompile 'org.jenkins-ci.plugins:structs:1.1@jar'
+    testCompile 'org.jenkins-ci.plugins:cloudbees-folder:4.4@jar'
+
+    testPlugins 'org.jenkins-ci.plugins:credentials:1.24'
+    testPlugins 'org.jenkins-ci.plugins:git:2.4.0'
+    testPlugins 'org.jenkins-ci.plugins:ghprb:1.31.4'
+    testPlugins 'org.jenkins-ci.plugins:git-client:1.18.0'
+    testPlugins 'com.coravy.hudson.plugins.github:github:1.14.0'
+    testPlugins 'org.jenkins-ci.plugins:github-api:1.71'
+    testPlugins 'org.jenkins-ci.plugins:parameterized-trigger:2.30'
+    testPlugins 'org.jenkins-ci.plugins:credentials-binding:1.7'
+    testPlugins 'org.jenkins-ci.plugins:claim:2.8'
+    testPlugins 'org.jenkins-ci.plugins:matrix-auth:1.2'
+    testPlugins 'org.jenkins-ci.plugins:matrix-project:1.6'
+    testPlugins 'com.sonyericsson.hudson.plugins.rebuild:rebuild:1.25'
+    testPlugins 'org.jenkins-ci.plugins:gradle:1.24'
+    testPlugins 'org.jenkins-ci.plugins:junit:1.11'
+    testPlugins 'org.jenkins-ci.plugins:embeddable-build-status:1.9'
+    testPlugins 'org.jenkins-ci.plugins:ansicolor:0.4.2'
+    testPlugins 'org.jenkins-ci.plugins:artifactory:2.4.4'
+    testPlugins 'org.jenkins-ci.plugins:build-pipeline-plugin:1.4.9'
+    testPlugins 'org.jenkins-ci.plugins:cloudfoundry:1.5@jar'
+    testPlugins 'org.jenkins-ci.plugins:cloud-stats:0.1'
+    testPlugins 'org.jenkins-ci.plugins:plain-credentials:1.1'
+    testPlugins 'org.jenkins-ci.plugins:build-monitor-plugin:+'
+}
+
+task resolveTestPlugins(type: Copy) {
+    from configurations.testPlugins
+    into new File(sourceSets.test.output.resourcesDir, 'test-dependencies')
+    include '*.hpi'
+    include '*.jpi'
+
+    doLast {
+        def baseNames = source.collect { it.name[0..it.name.lastIndexOf('.')-1] }
+        new File(destinationDir, 'index').setText(baseNames.join('\n'), 'UTF-8')
+    }
+}
+
+test {
+    dependsOn tasks.resolveTestPlugins
+
+    // set build directory for Jenkins test harness, JENKINS-26331
+    systemProperty 'buildDirectory', project.buildDir.absolutePath
+}
+
+task wrapper(type:Wrapper) {
+    gradleVersion = '2.14'
+}
