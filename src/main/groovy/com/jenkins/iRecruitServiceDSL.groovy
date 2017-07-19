@@ -18,6 +18,7 @@ job('iRecruit Service Build and Test') {
 		gradle {
 			tasks('clean')
 			tasks('test')
+			tasks('artifactoryPublish')
 			switches('-i')
 			useWrapper()
 		}
