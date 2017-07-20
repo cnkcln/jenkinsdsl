@@ -1,16 +1,12 @@
-job('iRecruit Service Build and Test') {
+job('iRecruit Service Unit And Integration Test - Branch') {
 	scm {
 		git {
 			remote {
 				url 'https://ositechportal@bitbucket.org/ositechportal/irecruit-service.git'
-		credentials 'bbid'
-					
+				credentials 'bbid'
 			}
-			extensions {
-				wipeOutWorkspace()
-			}
+			extensions { wipeOutWorkspace() }
 			branch '*/RS*'
-		
 		}
 	}
 
@@ -24,50 +20,42 @@ job('iRecruit Service Build and Test') {
 	}
 
 	triggers {
-		
-		scm('* * * * *') {
-			ignorePostCommitHooks()
-		}
+
+		scm('* * * * *') { ignorePostCommitHooks() }
 		bitbucketPush()
 	}
 
 
-	wrappers {
-		colorizeOutput()
-	}
-	
-	 publishers {
-            archiveJunit('**/*.xml') {
-            allowEmptyResults()
-            retainLongStdout()
-            healthScaleFactor(1.5)
-            testDataPublishers {
+	wrappers { colorizeOutput() }
+
+	publishers {
+		downstreamParameterized {
+			trigger('iRecruit Service Sonar -- Branch ') {
+				condition('SUCCESS')
+				parameters { gitRevision() }
+			}
+		}
+		archiveJunit('**/*.xml') {
+			allowEmptyResults()
+			retainLongStdout()
+			healthScaleFactor(1.5)
+			testDataPublishers {
 				allowClaimingOfFailedTests()
 				publishFlakyTestsReport()
-               			publishTestStabilityData()
-            }
-			downstreamParameterized {
-				trigger('iRecruit Service Branch Sonar') {
-					condition('SUCCESS')
-					parameters {
-						gitRevision()
-					}
-				}
+				publishTestStabilityData()
 			}
-        }
-    }
+		}
+	}
 }
 
-job('iRecruit Service Branch Sonar') {
+job('iRecruit Service Sonar -- Branch ') {
 	scm {
 		git {
 			remote {
 				url 'https://ositechportal@bitbucket.org/ositechportal/irecruit-service.git'
 				credentials 'bbid'
 			}
-			extensions {
-				wipeOutWorkspace()
-			}
+			extensions { wipeOutWorkspace() }
 			branch '*/RS*'
 		}
 	}
@@ -81,7 +69,5 @@ job('iRecruit Service Branch Sonar') {
 		}
 	}
 
-	wrappers {
-		colorizeOutput()
-	}
+	wrappers { colorizeOutput() }
 }
