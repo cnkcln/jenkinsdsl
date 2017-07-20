@@ -5,5 +5,6 @@ buildMonitorView('Radiator View') {
         name('Tax Portal Build and Test')
         name('Recruit Portal Build and Test')
         name('iRecruit Service Build and Test')
+		name('iRecruit Service Branch Sonar')
     }
 }
