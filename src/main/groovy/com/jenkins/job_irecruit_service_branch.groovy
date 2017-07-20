@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 job('iRecruit Service Unit And Integration Test - Branch') {
+=======
+job('iRecruit Service Branch Build and Test') {
+>>>>>>> 0cce170c7610d66da0c8e8607e9a28fed8689a3e
 	scm {
 		git {
 			remote {
@@ -13,7 +17,7 @@ job('iRecruit Service Unit And Integration Test - Branch') {
 	steps {
 		gradle {
 			tasks('clean')
-			tasks('test')
+			tasks('build')
 			switches('-i')
 			useWrapper()
 		}
