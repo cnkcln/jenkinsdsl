@@ -56,7 +56,7 @@ job('iRecruit Service Branch Sonar -- Master') {
 				credentials 'bbid'
 			}
 			extensions { wipeOutWorkspace() }
-			branch '*/master'
+			branch '*/phase1'
 		}
 	}
 
@@ -91,7 +91,7 @@ job('iRecruit Service Publish') {
 				credentials 'bbid'
 			}
 			extensions { wipeOutWorkspace() }
-			branch '*/master'
+			branch '*/phase1'
 		}
 	}
 
@@ -117,8 +117,8 @@ listView('RS Master Jobs') {
 		buildButton()
 	}
 	jobs {
-		name('iRecruit Service Master Build and Test')
-		name('iRecruit Service Master Sonar')
+		name('iRecruit Service Build and Test -- Master')
+		name('iRecruit Service Branch Sonar -- Master')
 		name('iRecruit Service Publish')
 //		name('iRecruit Service Deploy')
 //		name('iRecruit Service Performance Deploy')
