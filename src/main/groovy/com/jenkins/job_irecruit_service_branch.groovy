@@ -1,4 +1,4 @@
-job('iRecruit Service Build and Test') {
+job('iRecruit Service Branch Build and Test') {
 	scm {
 		git {
 			remote {
@@ -17,7 +17,7 @@ job('iRecruit Service Build and Test') {
 	steps {
 		gradle {
 			tasks('clean')
-			tasks('test')
+			tasks('build')
 			switches('-i')
 			useWrapper()
 		}
