@@ -13,7 +13,7 @@ job('iRecruit Service Unit And Integration Test - Branch') {
 	steps {
 		gradle {
 			tasks('clean')
-			tasks('build')
+			tasks('test')
 			switches('-i')
 			useWrapper()
 		}
@@ -70,4 +70,20 @@ job('iRecruit Service Sonar -- Branch ') {
 	}
 
 	wrappers { colorizeOutput() }
+}
+
+listView('RS Branch Jobs') {
+	columns {
+		status()
+		weather()
+		name()
+		lastSuccess()
+		lastFailure()
+		lastDuration()
+		buildButton()
+	}
+	jobs {
+		name('iRecruit Service Unit And Integration Test - Branch')
+		name('iRecruit Service Sonar -- Branch ')
+	}
 }

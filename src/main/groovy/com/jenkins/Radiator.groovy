@@ -4,8 +4,7 @@ buildMonitorView('Radiator View') {
 		// iRecruit Services Build
 		name('iRecruit Service Build and Test -- Master')
 		name('iRecruit Service Branch Sonar -- Master')
-		name('iRecruit Service Branch Sonar -- Master')
-		name('iRecruit Service Publish')
+		//name('iRecruit Service Publish')
 		
 		name('iRecruit Service Unit And Integration Test - Branch')
 		name('iRecruit Service Sonar -- Branch ')

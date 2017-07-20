@@ -13,7 +13,7 @@ job('iRecruit Service Build and Test -- Master') {
 	steps {
 		gradle {
 			tasks('clean')
-			tasks('test')
+			tasks('build')
 			switches('-i')
 			useWrapper()
 		}
@@ -103,21 +103,10 @@ job('iRecruit Service Publish') {
 			useWrapper()
 		}
 	}
-	/*
-	publishers {
-		downstreamParameterized {
-			trigger('iRecruit Service Isolation Test') {
-				condition('SUCCESS')
-				parameters {
-					predefinedProp('ARTIFACT_ID', '${GIT_COMMIT}')
-				}
-			}
-		}
-	}*/
 	wrappers { colorizeOutput() }
 }
 
-listView('Master Jobs') {
+listView('RS Master Jobs') {
 	columns {
 		status()
 		weather()
