@@ -30,25 +30,22 @@ job('iRecruit Service Unit And Integration Test - Branch') {
 
 	publishers {
 		downstreamParameterized {
-			trigger('iRecruit Service Sonar -- Branch ') {
+			trigger('iRecruit Service Sonar -- Branch') {
 				condition('SUCCESS')
 				parameters { gitRevision() }
 			}
 		}
-		archiveJunit('**/*.xml') {
-			allowEmptyResults()
-			retainLongStdout()
-			healthScaleFactor(1.5)
-			testDataPublishers {
-				allowClaimingOfFailedTests()
-				publishFlakyTestsReport()
-				publishTestStabilityData()
+		
+		buildPipelineTrigger('iRecruit Service Sonar -- Branch') {
+			parameters {
+				predefinedProp('GIT_COMMIT', gitRevision())
+				//predefinedProp('ARTIFACT_BUILD_NUMBER', '$BUILD_NUMBER')
 			}
 		}
 	}
 }
 
-job('iRecruit Service Sonar -- Branch ') {
+job('iRecruit Service Sonar -- Branch') {
 	scm {
 		git {
 			remote {
