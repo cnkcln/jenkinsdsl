@@ -28,6 +28,13 @@ job('iRecruit Service Build and Test -- Master') {
 
 	wrappers { colorizeOutput() }
 
+	postBuildSteps("SUCCESS")
+		trigger('iRecruit Service Branch Sonar -- Master') {
+				condition('SUCCESS')
+				parameters { gitRevision() }
+			}
+	}
+
 	publishers {
 		downstreamParameterized {
 			trigger('iRecruit Service Branch Sonar -- Master') {

@@ -58,6 +58,8 @@ dependencies {
     testPlugins 'org.jenkins-ci.plugins:cloud-stats:0.1'
     testPlugins 'org.jenkins-ci.plugins:plain-credentials:1.1'
     testPlugins 'org.jenkins-ci.plugins:build-monitor-plugin:+'
+	testPlugins 'org.jenkins-ci.plugins:build-pipeline-plugin:1.5.2'
+	
 }
 
 task resolveTestPlugins(type: Copy) {
