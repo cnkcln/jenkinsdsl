@@ -33,7 +33,6 @@ job('iRecruit Service Build and Test -- Master') {
 				condition('SUCCESS')
 				parameters { gitRevision() }
 			}
-	}
 
 	publishers {
 		downstreamParameterized {
