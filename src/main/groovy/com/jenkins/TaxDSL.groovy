@@ -6,7 +6,7 @@ job('Tax Portal Build and Test') {
 				credentials 'itid'
 			}
 			extensions { wipeOutWorkspace() }
-			branch '*/phase3'
+			branch '*/phase3.1'
 		}
 	}
 
