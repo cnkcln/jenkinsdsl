@@ -1,4 +1,4 @@
-job('iRecruit Service Build and Test -- Master') {
+job('iRecruit-Service-Build:(Master)') {
 	scm {
 		git {
 			remote {
@@ -30,7 +30,7 @@ job('iRecruit Service Build and Test -- Master') {
 
 	publishers {
 		downstreamParameterized {
-			trigger('iRecruit Service Branch Sonar -- Master') {
+			trigger('iRecruit-Service-Sonar:(Master)') {
 				condition('SUCCESS')
 				parameters { gitRevision() }
 			}
@@ -48,7 +48,7 @@ job('iRecruit Service Build and Test -- Master') {
 	}
 }
 
-job('iRecruit Service Branch Sonar -- Master') {
+job('iRecruit-Service-Sonar:(Master)') {
 	scm {
 		git {
 			remote {
@@ -71,7 +71,7 @@ job('iRecruit Service Branch Sonar -- Master') {
 	
 	publishers {
 		downstreamParameterized {
-			trigger('iRecruit Service Publish') {
+			trigger('iRecruit-Service-Publish:(Master)') {
 				condition('SUCCESS')
 				parameters {
 					gitRevision()
@@ -83,7 +83,7 @@ job('iRecruit Service Branch Sonar -- Master') {
 	wrappers { colorizeOutput() }
 }
 
-job('iRecruit Service Publish') {
+job('iRecruit-Service-Publish:(Master)') {
 	scm {
 		git {
 			remote {
@@ -98,7 +98,41 @@ job('iRecruit Service Publish') {
 	steps {
 		gradle {
 			tasks('clean')
-			tasks('artifactory')
+			tasks('uploadArchives')
+			switches('-i -Pversion=${GIT_COMMIT}')
+			useWrapper()
+		}
+	}
+	
+	publishers {
+		downstreamParameterized {
+			trigger('iRecruit-Service-Deploy:(Master)') {
+				condition('SUCCESS')
+				parameters {
+					gitRevision()
+				}
+			}
+		}
+	}
+	wrappers { colorizeOutput() }
+}
+
+job('iRecruit-Service-Deploy:(Master)') {
+	scm {
+		git {
+			remote {
+				url 'https://ositechportal@bitbucket.org/ositechportal/irecruit-service.git'
+				credentials 'bbid'
+			}
+			extensions { wipeOutWorkspace() }
+			branch '*/phase1'
+		}
+	}
+
+	steps {
+		gradle {
+			tasks('clean')
+			tasks('downloadFile')
 			switches('-i -Pversion=${GIT_COMMIT}')
 			useWrapper()
 		}
@@ -117,10 +151,10 @@ listView('RS Master Jobs') {
 		buildButton()
 	}
 	jobs {
-		name('iRecruit Service Build and Test -- Master')
-		name('iRecruit Service Branch Sonar -- Master')
-		name('iRecruit Service Publish')
-//		name('iRecruit Service Deploy')
+		name('iRecruit-Service-Build:(Master)')
+		name('iRecruit-Service-Sonar:(Master)')
+		name('iRecruit-Service-Publish:(Master)')
+		name('iRecruit-Service-Deploy:(Master)')
 //		name('iRecruit Service Performance Deploy')
 //		name('iRecruit Service Isolation Test')
 //		name('iRecruit Service Performance Test')
