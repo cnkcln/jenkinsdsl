@@ -1,4 +1,4 @@
-job('iRecruit-Service-Build:(Master)') {
+job('iRecruit-Service-Build-(Master)') {
 	scm {
 		git {
 			remote {
@@ -30,7 +30,7 @@ job('iRecruit-Service-Build:(Master)') {
 
 	publishers {
 		downstreamParameterized {
-			trigger('iRecruit-Service-Sonar:(Master)') {
+			trigger('iRecruit-Service-Sonar-(Master)') {
 				condition('SUCCESS')
 				parameters { gitRevision() }
 			}
@@ -48,7 +48,7 @@ job('iRecruit-Service-Build:(Master)') {
 	}
 }
 
-job('iRecruit-Service-Sonar:(Master)') {
+job('iRecruit-Service-Sonar-(Master)') {
 	scm {
 		git {
 			remote {
@@ -71,7 +71,7 @@ job('iRecruit-Service-Sonar:(Master)') {
 	
 	publishers {
 		downstreamParameterized {
-			trigger('iRecruit-Service-Publish:(Master)') {
+			trigger('iRecruit-Service-Publish-(Master)') {
 				condition('SUCCESS')
 				parameters {
 					gitRevision()
@@ -83,7 +83,7 @@ job('iRecruit-Service-Sonar:(Master)') {
 	wrappers { colorizeOutput() }
 }
 
-job('iRecruit-Service-Publish:(Master)') {
+job('iRecruit-Service-Publish-(Master)') {
 	scm {
 		git {
 			remote {
@@ -106,7 +106,7 @@ job('iRecruit-Service-Publish:(Master)') {
 	
 	publishers {
 		downstreamParameterized {
-			trigger('iRecruit-Service-Deploy:(Master)') {
+			trigger('iRecruit-Service-Deploy-(Master)') {
 				condition('SUCCESS')
 				parameters {
 					gitRevision()
@@ -117,7 +117,7 @@ job('iRecruit-Service-Publish:(Master)') {
 	wrappers { colorizeOutput() }
 }
 
-job('iRecruit-Service-Deploy:(Master)') {
+job('iRecruit-Service-Deploy-(Master)') {
 	scm {
 		git {
 			remote {
@@ -151,10 +151,10 @@ listView('RS Master Jobs') {
 		buildButton()
 	}
 	jobs {
-		name('iRecruit-Service-Build:(Master)')
-		name('iRecruit-Service-Sonar:(Master)')
-		name('iRecruit-Service-Publish:(Master)')
-		name('iRecruit-Service-Deploy:(Master)')
+		name('iRecruit-Service-Build-(Master)')
+		name('iRecruit-Service-Sonar-(Master)')
+		name('iRecruit-Service-Publish-(Master)')
+		name('iRecruit-Service-Deploy-(Master)')
 //		name('iRecruit Service Performance Deploy')
 //		name('iRecruit Service Isolation Test')
 //		name('iRecruit Service Performance Test')
