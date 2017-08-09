@@ -26,7 +26,6 @@ job('Tax-Portal-Build-and-Test(Phase3.1)') {
 	}
 
 
-	wrappers { colorizeOutput() }
 
 	publishers {
 		downstreamParameterized {
@@ -35,6 +34,7 @@ job('Tax-Portal-Build-and-Test(Phase3.1)') {
 				parameters { gitRevision() }
 			}
 		}
+		
 		archiveJunit('**/*.xml') {
 			allowEmptyResults()
 			retainLongStdout()
@@ -45,6 +45,7 @@ job('Tax-Portal-Build-and-Test(Phase3.1)') {
 				publishTestStabilityData()
 			}
 		}
+		wrappers { colorizeOutput() }
 	}
 }
 
@@ -61,22 +62,22 @@ job('Tax-Portal-Service-Publish(Phase3.1)') {
 		}
 	}
 	
+	steps {
+		gradle {
+			tasks('clean')
+			tasks('build')
+			tasks('uploadArchives')
+			switches('-i -Pversion=${GIT_COMMIT}')
+			useWrapper()
+		}
+	}
+	
 	publishers {
 		downstreamParameterized {
 			trigger('Tax-Portal-Service-Deploy(Phase3.1)') {
 				condition('SUCCESS')
 				parameters { gitRevision() }
 			}
-		}
-
-	steps {
-		gradle {
-			
-			tasks('clean')
-			tasks('build')
-			tasks('uploadArchives')
-			switches('-i -Pversion=${GIT_COMMIT}')
-			useWrapper()
 		}
 	}
 	wrappers { colorizeOutput() }
@@ -124,5 +125,4 @@ listView('Tax Master Jobs') {
 		name('Tax-Portal-Service-Deploy(Phase3.1)')
 		
 	}
-}
 }
