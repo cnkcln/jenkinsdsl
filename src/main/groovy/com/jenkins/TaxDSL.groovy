@@ -100,10 +100,11 @@ job('Tax-Portal-Service-Deploy(Phase3.1)') {
 		gradle {
 			tasks('clean')
 			tasks('downloadFile')
-			tasks('startServer')
 			switches('-i -Pversion=${GIT_COMMIT}')
 			useWrapper()
 		}
+		shell( "fuser -k 9080/tcp &" )
+		shell( "sh /var/www/clients/demos/taxjars/*.jar --JASYPT_ENCRYPTOR_PASSWORD=osisecret > log.txt 2>&1 &")
 	}
 	wrappers { colorizeOutput() }
 	

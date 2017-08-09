@@ -136,6 +136,8 @@ job('iRecruit-Service-Deploy-(Master)') {
 			switches('-i -Pversion=${GIT_COMMIT}')
 			useWrapper()
 		}
+		shell( "fuser -k 7080/tcp &" )
+		shell( "sh /var/www/clients/demos/jars/*.jar --JASYPT_ENCRYPTOR_PASSWORD=secret > log.txt 2>&1 &")
 	}
 	wrappers { colorizeOutput() }
 }
