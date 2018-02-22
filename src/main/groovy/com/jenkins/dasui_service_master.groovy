@@ -1,4 +1,4 @@
-job('DAS-Service-Build-(Master)') {
+job('DAS-Ui-Build-(Master)') {
 	scm {
 		git {
 			remote {
