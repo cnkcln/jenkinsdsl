@@ -2,7 +2,7 @@ job('DAS-Service-Build-(Master)') {
 	scm {
 		git {
 			remote {
-				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git''
+				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git'
 				credentials 'bbid'
 			}
 			extensions { wipeOutWorkspace() }
@@ -52,7 +52,7 @@ job('DAS-Ui-Sonar-(Master)') {
 	scm {
 		git {
 			remote {
-				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git''
+				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git'
 				credentials 'bbid'
 			}
 			extensions { wipeOutWorkspace() }
@@ -87,7 +87,7 @@ job('DAS-Ui-Publish-(Master)') {
 	scm {
 		git {
 			remote {
-				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git''
+				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git'
 				credentials 'bbid'
 			}
 			extensions { wipeOutWorkspace() }
@@ -121,7 +121,7 @@ job('DAS-Ui-Deploy-(Master)') {
 	scm {
 		git {
 			remote {
-				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git''
+				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git'
 				credentials 'bbid'
 			}
 			extensions { wipeOutWorkspace() }
