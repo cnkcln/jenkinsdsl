@@ -157,10 +157,10 @@ listView('RS Master Jobs') {
 		name('DAS-Service-Sonar-(Master)')
 		name('DAS-Service-Publish-(Master)')
 		name('DAS-Service-Deploy-(Master)')
-//		name('iRecruit Service Performance Deploy')
-//		name('iRecruit Service Isolation Test')
-//		name('iRecruit Service Performance Test')
-//		name('iRecruit Service Promote Artifact')
+//		name('DAS-Service Performance Deploy')
+//		name('DAS-Service Isolation Test')
+//		name('DAS-Service Performance Test')
+//		name('DAS-Service Promote Artifact')
 		
 	}
 }
