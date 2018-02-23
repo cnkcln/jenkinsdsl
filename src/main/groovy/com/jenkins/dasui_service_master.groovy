@@ -83,6 +83,7 @@ job('DAS-Ui-Sonar-(Master)') {
 	wrappers { colorizeOutput() }
 }
 
+
 job('DAS-Ui-Publish-(Master)') {
 	scm {
 		git {
@@ -141,6 +142,29 @@ job('DAS-Ui-Deploy-(Master)') {
 	}
 	wrappers { colorizeOutput() }
 }
+job('DAS-Ui-e2e-(Master)') {
+	scm {
+		git {
+			remote {
+				url 'https://ositechportal@bitbucket.org/ositechportal/dasui.git'
+				credentials 'bbid'
+			}
+			extensions { wipeOutWorkspace() }
+			branch '*/master'
+		}
+	}
+
+	steps {
+		gradle {
+			tasks('clean')
+			tasks('clientIntegrationTest')
+			switches('-i -Pversion=${GIT_COMMIT}')
+			useWrapper()
+		}
+	}
+	
+	wrappers { colorizeOutput() }
+}
 
 listView('RS Master Jobs') {
 	columns {
@@ -157,6 +181,7 @@ listView('RS Master Jobs') {
 		name('DAS-Ui-Sonar-(Master)')
 		name('DAS-Ui-Publish-(Master)')
 		name('DAS-Ui-Deploy-(Master)')
+		name('DAS-Ui-e2e-(Master)')
 //		name('iRecruit Service Performance Deploy')
 //		name('iRecruit Service Isolation Test')
 //		name('iRecruit Service Performance Test')
