@@ -166,7 +166,7 @@ job('DAS-Ui-e2e-(Master)') {
 	wrappers { colorizeOutput() }
 }
 
-listView('RS Master Jobs') {
+listView('RS-UI Master Jobs') {
 	columns {
 		status()
 		weather()
