@@ -42,6 +42,4 @@ Prerequisites:
 which have been successfully created
 
 
-Author
--------
-Ajinkya Kakade
+
